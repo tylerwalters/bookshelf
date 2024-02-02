@@ -13,9 +13,9 @@ function AddBook() {
 
   async function fetchBook(isbn: string): Promise<VolumeInfo> {
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
-    const { data } = await response.json();
+    const { items } = await response.json();
 
-    return data?.items[0]?.volumneInfo;
+    return items[0]?.volumeInfo;
   }
 
   async function handleScan(isbn: string) {
@@ -37,7 +37,7 @@ function AddBook() {
             setAddedBook(null);
           }}
         >
-          Add New Book
+          {addedBook ? 'Add Another Book' : 'Add New Book'}
         </Button>
       )}
 

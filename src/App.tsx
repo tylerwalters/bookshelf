@@ -13,7 +13,7 @@ function App() {
   const [view, setView] = useState(VIEWS.HOME);
 
   return (
-    <div className="flex flex-col h-screen w-screen">
+    <div className="flex flex-col h-[calc(100dvh)] w-screen">
       {view === VIEWS.HOME && <Home />}
 
       {view === VIEWS.ADD_BOOK && <AddBook />}
