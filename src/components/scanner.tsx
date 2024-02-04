@@ -1,7 +1,4 @@
-// import { useRef } from 'react';
-
-import { useZxing } from 'react-zxing';
-// import { BarcodeScanner } from 'react-barcode-scanner';
+import { BarcodeScanner, useTorch } from 'react-barcode-scanner';
 
 interface ScannerProps {
   onScan: (result: string) => void;
@@ -9,28 +6,22 @@ interface ScannerProps {
 
 function Scanner(props: ScannerProps) {
   const { onScan } = props;
-  // const inputRef = useRef(null);
 
-  // const barcodeDetector = new BarcodeDetector();
+  const [isSupportTorch, , onTorchSwitch] = useTorch();
 
-  // if (ref) {
-  //   barcodeDetector
-  //     .detect(inputRef.current)
-  //     .then((barcodes) => {
-  //       barcodes.forEach((barcode) => console.log(barcode.rawValue));
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
+  function onCapture(detected: { rawValue: string }) {
+    if (detected) {
+      onScan(detected.rawValue);
+    }
+  }
 
-  const { ref } = useZxing({
-    onDecodeResult(result) {
-      onScan(result.getText());
-    },
-  });
+  return (
+    <div className="h-1/3 w-full m-auto not-prose border border-slate-700">
+      <BarcodeScanner onCapture={onCapture} />
 
-  return <video ref={ref} />;
+      {isSupportTorch ? <button onClick={onTorchSwitch}>Swtich Torch</button> : null}
+    </div>
+  );
 }
 
 export default Scanner;

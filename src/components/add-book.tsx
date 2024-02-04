@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Button from './button';
 import Page from './page';
 import Scanner from './scanner';
-import BookSummary from './book-summary';
+import BookCard from './book-card';
 
 import { VolumeInfo } from '../types/google-books';
 
@@ -28,18 +28,27 @@ function AddBook() {
 
   return (
     <Page>
-      {addedBook && <BookSummary book={addedBook} />}
+      <div className="flex flex-col justify-center items-center m-auto">
+        {addedBook && (
+          <>
+            <h2 className="mt-0 text-emerald-600">Added Successfully!</h2>
 
-      {!showScanner && (
-        <Button
-          onClick={() => {
-            setShowScanner(true);
-            setAddedBook(null);
-          }}
-        >
-          {addedBook ? 'Add Another Book' : 'Add New Book'}
-        </Button>
-      )}
+            <BookCard book={addedBook} />
+          </>
+        )}
+
+        {!showScanner && (
+          <Button
+            className={`${addedBook ? 'mt-8' : ''} justify-center`}
+            onClick={() => {
+              setShowScanner(true);
+              setAddedBook(null);
+            }}
+          >
+            {addedBook ? 'Add Another Book' : 'Add New Book'}
+          </Button>
+        )}
+      </div>
 
       {showScanner && <Scanner onScan={handleScan} />}
     </Page>

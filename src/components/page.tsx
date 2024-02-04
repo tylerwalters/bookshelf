@@ -7,7 +7,7 @@ interface PageProps {
 function Page(props: PageProps) {
   const { children } = props;
 
-  return <div className="flex-grow p-4">{children}</div>;
+  return <div className="flex flex-grow p-4 prose">{children}</div>;
 }
 
 export default Page;
